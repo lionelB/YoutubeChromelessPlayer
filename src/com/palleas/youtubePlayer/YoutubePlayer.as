@@ -12,24 +12,34 @@ package com.palleas.youtubePlayer
     
     public function YoutubePlayer()
     {
-      
+      trace("initializing player");
+      init(); 
+    }
+    
+    public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false) : void
+    {
+      if (!player)
+      {
+        throw new Error("Player not ready");
+      }
     }
     
     protected function init() : void
     {
+      trace("Initializing player loading");
       playerLoader = new Loader();
       playerLoader.contentLoaderInfo.addEventListener(Event.INIT, playerLoadingInitHandler);
       playerLoader.load(new URLRequest(PLAYER_URL));
-      /*
-      * ar loader:Loader = new Loader();
-      loader.contentLoaderInfo.addEventListener(Event.INIT, onLoaderInit);
-      loader.load(new URLRequest("http://www.youtube.com/apiplayer?version=3"));
-      */
     }
     
     protected function playerLoadingInitHandler(e:Event) : void
     {
+      trace("player download initialized");
       playerLoader.removeEventListener(Event.INIT, playerLoadingInitHandler);
+
+      player = playerLoader.content;
+      playerLoader.unload();
+      playerLoader = null;
     }
   }
 }
