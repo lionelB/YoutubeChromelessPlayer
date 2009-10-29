@@ -146,8 +146,22 @@ package com.palleas.youtubePlayer
     {
       return player.getAvailableQualityLevels();
     }
-
     
+    // informations methods
+    public function getDuration() : Number
+    {
+      return player.getDuration();
+    }
+    
+    public function getVideoUrl() : String
+    {
+      return player.getVideoUrl();
+    }
+    
+    public function getVideoEmbedCode() : String
+    {
+      return player.getVideoEmbedCode();  
+    }
     // ----------- Protected methods ------------ //
     protected function init() : void
     {
