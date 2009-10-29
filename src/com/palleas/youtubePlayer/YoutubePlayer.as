@@ -12,7 +12,7 @@ package com.palleas.youtubePlayer
   {
     static public const PLAYER_URL : String = "http://www.youtube.com/apiplayer?version=3";
     protected var playerLoader : Loader;
-    protected var player : IEventDispatcher;
+    protected var player : Object;
     
     public function YoutubePlayer()
     {
@@ -21,6 +21,28 @@ package com.palleas.youtubePlayer
       init(); 
     }
     
+    // ----------- Public methods ----------------//
+    public function cueVideoById(videoId:String, startSeconds:Number, suggestedQuality:String) : void
+    {
+      player.cueVideoById(videoId, startSeconds, suggestedQuality);
+    }
+    
+    public function loadVideoById(videoId:String, startSeconds:Number = 0, suggestedQuality:String = null) : void
+    {
+      player.loadVideoById(videoId, startSeconds, suggestedQuality);
+    }
+    
+    public function cueVideoByUrl(mediaContentUrl:String, startSeconds:Number) : void
+    {
+      player.cueVideoByUrl(mediaContentUrl, startSeconds);
+    }
+    
+    public function loadVideoByUrl(mediaContentUrl:String, startSeconds:Number) : void
+    {
+      player.loadVideoByUrl(mediaContentUrl, startSeconds);
+    }
+    
+    // ----------- Protected methods ------------ //
     protected function init() : void
     {
       trace("Initializing player loading");
@@ -29,6 +51,7 @@ package com.palleas.youtubePlayer
       playerLoader.load(new URLRequest(PLAYER_URL));
     }
     
+    // ----------- Event Handlers ------------//
     protected function playerLoadingInitHandler(e:Event) : void
     {
       trace("player download initialized");
@@ -45,21 +68,25 @@ package com.palleas.youtubePlayer
     
     private function _playerReadyHandler(e:Event) : void
     {
+      trace("Player is ready");
       dispatchEvent(new YoutubePlayerEvent(YoutubePlayerEvent.READY));
     }
     
     private function _playerErrorHandler(e:Event) : void
     {
+      trace("Player error");
       dispatchEvent(new YoutubePlayerEvent(YoutubePlayerEvent.READY));
     }
     
     private function _playerStateChangeHandler(e:Event) : void
     {
+      trace("Player state changed");
       dispatchEvent(new YoutubePlayerEvent(YoutubePlayerEvent.READY));  
     }
     
     private function _playerQualityChangeHandler(e:Event) : void
     {
+      trace("Player quality changed");
       dispatchEvent(new YoutubePlayerEvent(YoutubePlayerEvent.READY));
     }
   }
