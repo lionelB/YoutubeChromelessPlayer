@@ -2,13 +2,14 @@ package com.palleas.youtubePlayer
 {
   import flash.display.Loader;
   import flash.events.Event;
+  import flash.events.IEventDispatcher;
   import flash.net.URLRequest;
 
-  public class YoutubePlayer 
+  public class YoutubePlayer
   {
     static public const PLAYER_URL : String = "http://www.youtube.com/apiplayer?version=3";
     protected var playerLoader : Loader;
-    protected var player : Object;
+    protected var player : IEventDispatcher;
     
     public function YoutubePlayer()
     {
@@ -35,10 +36,9 @@ package com.palleas.youtubePlayer
     protected function playerLoadingInitHandler(e:Event) : void
     {
       trace("player download initialized");
-      playerLoader.removeEventListener(Event.INIT, playerLoadingInitHandler);
+      playerLoader.contentLoaderInfo.removeEventListener(Event.INIT, playerLoadingInitHandler);
 
-      player = playerLoader.content;
-      playerLoader.unload();
+      player = IEventDispatcher(playerLoader.content);
       playerLoader = null;
     }
   }
