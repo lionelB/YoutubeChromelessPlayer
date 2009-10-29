@@ -1,4 +1,4 @@
-package events
+package com.palleas.youtubePlayer.events
 {
   import flash.events.Event;
   
@@ -8,7 +8,7 @@ package events
     static public const ERROR : String = "onError";
     static public const STATE_CHANGE : String = "onStateChange";
     static public const QUALITY_CHANGE : String = "onPlaybackQualityChange";
-
+    
     public function YoutubePlayerEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
     {
       super(type, bubbles, cancelable);
