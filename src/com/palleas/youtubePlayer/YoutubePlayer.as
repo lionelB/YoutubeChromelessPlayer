@@ -2,7 +2,6 @@ package com.palleas.youtubePlayer
 {
   import com.palleas.youtubePlayer.events.YoutubePlayerEvent;
   
-  import flash.display.DisplayObject;
   import flash.display.Loader;
   import flash.display.Sprite;
   import flash.events.Event;
@@ -18,17 +17,17 @@ package com.palleas.youtubePlayer
     public function YoutubePlayer()
     {
       super();
-      trace("initializing player");
       init(); 
     }
     
     // ----------- Public methods ----------------//
+    // queueing methods
     public function cueVideoById(videoId:String, startSeconds:Number = 0, suggestedQuality:String = "default") : void
     {
       player.cueVideoById(videoId, startSeconds, suggestedQuality);
     }
     
-    public function loadVideoById(videoId:String, startSeconds:Number = 0, suggestedQuality:String = "default") : void
+    public function loadVideoById(videoId:String, startSeconds:Number = 0, suggestedQuality:String = null) : void
     {
       player.loadVideoById(videoId, 2, suggestedQuality);
     }
@@ -43,9 +42,9 @@ package com.palleas.youtubePlayer
       player.loadVideoByUrl(mediaContentUrl, startSeconds);
     }
     
+    // video playing methods
     public function playVideo() : void
     {
-      trace("playing video");
       player.playVideo();
     }
     
@@ -69,13 +68,49 @@ package com.palleas.youtubePlayer
       player.setSize(width, height);
     }
     
+    // volume methods
+    public function mute() : void
+    {
+      player.mute();
+    }
+    
+    public function unMute() : void
+    {
+      player.unMute(); 
+    }
+    
+    public function isMuted() : Boolean
+    {
+      return player.isMuted();
+    }
+
+    public function get muted() : Boolean
+    {
+      return isMuted();
+    }
+    
+    public function setVolume(volume:Number) : void
+    {
+      //TODO dispatch VOLUME_CHANGED event
+      player.setVolume(volume);
+    }
+    
+    public function getVolume() : Number
+    {
+      return player.getVolume(); 
+    }
+    
+    public function get volume() : Number
+    {
+      return getVolume();
+    }
+    
     // ----------- Protected methods ------------ //
     protected function init() : void
     {
       Security.allowDomain("*");
       Security.allowInsecureDomain("*");
       
-      trace("Initializing player loading");
       playerContainer = new Loader();
       playerContainer.contentLoaderInfo.addEventListener(Event.INIT, playerLoadingInitHandler);
       playerContainer.load(new URLRequest(PLAYER_URL));
@@ -84,7 +119,6 @@ package com.palleas.youtubePlayer
     // ----------- Event Handlers ------------//
     protected function playerLoadingInitHandler(e:Event) : void
     {
-      trace("player download initialized");
       addChild(playerContainer);
       playerContainer.contentLoaderInfo.removeEventListener(Event.INIT, playerLoadingInitHandler);
 
@@ -98,25 +132,21 @@ package com.palleas.youtubePlayer
     
     private function _playerReadyHandler(e:Event) : void
     {
-      trace("Player is ready");
       dispatchEvent(new YoutubePlayerEvent(YoutubePlayerEvent.READY));
     }
     
     private function _playerErrorHandler(e:Event) : void
     {
-      trace("Player error");
       dispatchEvent(new YoutubePlayerEvent(YoutubePlayerEvent.ERROR));
     }
     
     private function _playerStateChangeHandler(e:Event) : void
     {
-      trace("Player state changed");
       dispatchEvent(new YoutubePlayerEvent(YoutubePlayerEvent.STATE_CHANGE));  
     }
     
     private function _playerQualityChangeHandler(e:Event) : void
     {
-      trace("Player quality changed");
       dispatchEvent(new YoutubePlayerEvent(YoutubePlayerEvent.QUALITY_CHANGE));
     }
   }
