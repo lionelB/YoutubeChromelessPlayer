@@ -42,6 +42,27 @@ package com.palleas.youtubePlayer
       player.loadVideoByUrl(mediaContentUrl, startSeconds);
     }
     
+    public function playVideo() : void
+    {
+      player.playVideo();
+    }
+    
+    public function stopVideo() : void
+    {
+      player.stopVideo();
+    }
+    
+    public function pauseVideo() : void
+    {
+      player.pauseVideo();
+    }
+    
+    public function seekTo(seconds:uint, allowSeekAhead:Boolean = true) : void
+    {
+      player.seekTo(seconds, allowSeekAhead);
+    } 
+
+    
     // ----------- Protected methods ------------ //
     protected function init() : void
     {
