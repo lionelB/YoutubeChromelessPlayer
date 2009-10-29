@@ -105,6 +105,32 @@ package com.palleas.youtubePlayer
       return getVolume();
     }
     
+    // Playback status methods
+    public function getVideoBytesLoaded() : Number
+    {
+      return player.getVideoBytesLoaded();
+    }
+    
+    public function getVideoBytesTotal() : Number
+    {
+      return player.getVideoBytesTotal();
+    }
+    
+    public function getVideoStartBytes() : Number
+    {
+      return player.getVideoStartBytes();
+    }
+    
+    public function getPlayerState() : Number
+    {
+      return player.getPlayerState();
+    }
+    
+    public function getCurrentTime() : Number
+    {
+      return player.getCurrentTime();
+    }
+    
     // ----------- Protected methods ------------ //
     protected function init() : void
     {
