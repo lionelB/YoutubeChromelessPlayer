@@ -131,6 +131,23 @@ package com.palleas.youtubePlayer
       return player.getCurrentTime();
     }
     
+    // Playback quality methods
+    public function getPlaybackQuality() : String
+    {
+      return player.getPlaybackQuality();
+    }
+    
+    public function setPlaybackQuality(quality:String) : void
+    {
+      player.setPlaybackQuality(quality);
+    }
+    
+    public function getAvailableQualityLevels() : Array
+    {
+      return player.getAvailableQualityLevels();
+    }
+
+    
     // ----------- Protected methods ------------ //
     protected function init() : void
     {
