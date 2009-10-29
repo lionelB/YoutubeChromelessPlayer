@@ -5,19 +5,23 @@ package com.palleas.youtubePlayer
   import flash.display.Loader;
   import flash.display.Sprite;
   import flash.events.Event;
+  import flash.events.ProgressEvent;
+  import flash.events.TimerEvent;
   import flash.net.URLRequest;
   import flash.system.Security;
+  import flash.utils.Timer;
 
   public class YoutubePlayer extends Sprite
   {
     static public const PLAYER_URL : String = "http://www.youtube.com/apiplayer?version=3";
     protected var playerContainer : Loader;
     protected var player : Object;
+    protected var checkTimer : Timer;
     
     public function YoutubePlayer()
     {
       super();
-      init(); 
+      init();
     }
     
     // ----------- Public methods ----------------//
@@ -121,6 +125,11 @@ package com.palleas.youtubePlayer
       return player.getVideoStartBytes();
     }
     
+    public function getVideoProgressLoaded() : Number
+    {
+      return (getVideoBytesLoaded()/getVideoBytesTotal()) * 100;
+    }
+    
     public function getPlayerState() : Number
     {
       return player.getPlayerState();
@@ -174,9 +183,11 @@ package com.palleas.youtubePlayer
     // ----------- Protected methods ------------ //
     protected function init() : void
     {
+      // Sandbox stuff
       Security.allowDomain("*");
       Security.allowInsecureDomain("*");
       
+      // player container loading
       playerContainer = new Loader();
       playerContainer.contentLoaderInfo.addEventListener(Event.INIT, playerLoadingInitHandler);
       playerContainer.load(new URLRequest(PLAYER_URL));
@@ -194,6 +205,21 @@ package com.palleas.youtubePlayer
       player.addEventListener("onError", _playerErrorHandler);
       player.addEventListener("onStateChange", _playerStateChangeHandler);
       player.addEventListener("onPlaybackQualityChange", _playerQualityChangeHandler);
+      
+      // now we can check on a few things
+      checkTimer = new Timer(500);
+      checkTimer.addEventListener(TimerEvent.TIMER, timerHitHandler);
+      checkTimer.start();
+    }
+    
+    protected function timerHitHandler(e:TimerEvent) : void
+    {
+      if (!(getVideoProgressLoaded() == 100)) {
+        var progress : ProgressEvent = new ProgressEvent(ProgressEvent.PROGRESS);
+        progress.bytesLoaded = getVideoBytesLoaded();
+        progress.bytesTotal = getVideoBytesTotal();
+        dispatchEvent(progress);
+      }
     }
     
     private function _playerReadyHandler(e:Event) : void
