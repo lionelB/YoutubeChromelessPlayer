@@ -162,6 +162,15 @@ package com.palleas.youtubePlayer
     {
       return player.getVideoEmbedCode();  
     }
+    
+    // prevents memory leaks
+    public function destroy():void
+    {
+      player.destroy();
+      removeChild(playerContainer);
+      playerContainer = null;
+    }
+    
     // ----------- Protected methods ------------ //
     protected function init() : void
     {
