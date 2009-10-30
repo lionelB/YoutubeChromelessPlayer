@@ -11,6 +11,11 @@ package com.palleas.youtubePlayer
   import flash.system.Security;
   import flash.utils.Timer;
 
+  [Event(type="flash.events.ProgressEvent", name="progress")]
+  [Event(type="com.palleas.youtubePlayer.events", name="ready")]
+  [Event(type="com.palleas.youtubePlayer.events", name="error")]
+  [Event(type="com.palleas.youtubePlayer.events", name="state_change")]
+  [Event(type="com.palleas.youtubePlayer.events", name="quality_change")]
   public class YoutubePlayer extends Sprite
   {
     static public const PLAYER_URL : String = "http://www.youtube.com/apiplayer?version=3";
