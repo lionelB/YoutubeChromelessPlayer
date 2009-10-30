@@ -127,7 +127,12 @@ package com.palleas.youtubePlayer
     
     public function getVideoProgressLoaded() : Number
     {
-      return (getVideoBytesLoaded()/getVideoBytesTotal()) * 100;
+      if (getVideoBytesTotal() == 0)
+      {
+        return 0;
+      }
+      var progress : Number = (getVideoBytesLoaded()/getVideoBytesTotal()) * 100;
+      return progress;
     }
     
     public function getPlayerState() : Number
@@ -205,16 +210,12 @@ package com.palleas.youtubePlayer
       player.addEventListener("onError", _playerErrorHandler);
       player.addEventListener("onStateChange", _playerStateChangeHandler);
       player.addEventListener("onPlaybackQualityChange", _playerQualityChangeHandler);
-      
-      // now we can check on a few things
-      checkTimer = new Timer(500);
-      checkTimer.addEventListener(TimerEvent.TIMER, timerHitHandler);
-      checkTimer.start();
     }
     
     protected function timerHitHandler(e:TimerEvent) : void
     {
-      if (!(getVideoProgressLoaded() == 100)) {
+      var currentProgress : Number = getVideoProgressLoaded();
+      if (!(currentProgress == 0 || currentProgress == 100)) {
         var progress : ProgressEvent = new ProgressEvent(ProgressEvent.PROGRESS);
         progress.bytesLoaded = getVideoBytesLoaded();
         progress.bytesTotal = getVideoBytesTotal();
@@ -224,6 +225,12 @@ package com.palleas.youtubePlayer
     
     private function _playerReadyHandler(e:Event) : void
     {
+      // now we can check on a few things
+      checkTimer = new Timer(500);
+      checkTimer.addEventListener(TimerEvent.TIMER, timerHitHandler);
+      checkTimer.start();
+      
+      // dispatch Ready Event
       dispatchEvent(new YoutubePlayerEvent(YoutubePlayerEvent.READY));
     }
     
