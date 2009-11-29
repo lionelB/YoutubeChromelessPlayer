@@ -1,3 +1,24 @@
+/**
+ Copyright (c) 2009 Romain 'Palleas' Pouclet
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ * */
+
 package com.palleas.youtubePlayer
 {
   import com.palleas.youtubePlayer.events.YoutubePlayerEvent;
@@ -10,7 +31,7 @@ package com.palleas.youtubePlayer
   import flash.net.URLRequest;
   import flash.system.Security;
   import flash.utils.Timer;
-
+  
   [Event(type="flash.events.ProgressEvent", name="progress")]
   [Event(type="com.palleas.youtubePlayer.events", name="ready")]
   [Event(type="com.palleas.youtubePlayer.events", name="error")]
@@ -31,11 +52,28 @@ package com.palleas.youtubePlayer
     
     // ----------- Public methods ----------------//
     // queueing methods
-    public function cueVideoById(videoId:String, startSeconds:Number = 0, suggestedQuality:String = "default") : void
+    /**
+     * Retrieves and cue a video from its id 
+     * The video won't start playing till an explicit call of playVideo() or seekTo() method
+     * @param String videoId if of the video
+     * @param Number startSeconds time to start loading the video at (optional, default 0)
+     * @param String suggestedQuality default quality of the video (optional)
+     * @return void
+     * 
+     */    
+    public function cueVideoById(videoId:String, startSeconds:Number = 0, suggestedQuality:String = null) : void
     {
       player.cueVideoById(videoId, startSeconds, suggestedQuality);
     }
     
+    /**
+     * Retrieves and load a video by its ID
+     * @param String videoId
+     * @param Number startSeconds
+     * @param String suggestedQuality
+     * @return void
+     * 
+     */    
     public function loadVideoById(videoId:String, startSeconds:Number = 0, suggestedQuality:String = null) : void
     {
       player.loadVideoById(videoId, 2, suggestedQuality);
@@ -71,7 +109,7 @@ package com.palleas.youtubePlayer
     {
       player.seekTo(seconds, allowSeekAhead);
     } 
-
+    
     public function setSize(width:Number, height:Number) : void
     {
       player.setSize(width, height);
@@ -92,7 +130,7 @@ package com.palleas.youtubePlayer
     {
       return player.isMuted();
     }
-
+    
     public function get muted() : Boolean
     {
       return isMuted();
@@ -208,7 +246,7 @@ package com.palleas.youtubePlayer
     {
       addChild(playerContainer);
       playerContainer.contentLoaderInfo.removeEventListener(Event.INIT, playerLoadingInitHandler);
-
+      
       player = playerContainer.content;
       
       player.addEventListener("onReady", _playerReadyHandler);
