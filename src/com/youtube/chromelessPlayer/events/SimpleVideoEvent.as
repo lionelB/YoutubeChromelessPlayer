@@ -1,4 +1,4 @@
-package com.lafabrick.youtube.player.events
+package com.youtube.chromelessPlayer.events
 {
 	import flash.events.Event;
 

@@ -1,11 +1,11 @@
-package com.lafabrick.youtube.player
+package com.youtube.chromelessPlayer
 {
-	import com.lafabrick.youtube.player.constants.PlayerStateCode;
-	import com.lafabrick.youtube.player.events.PlaybackQualityEvent;
-	import com.lafabrick.youtube.player.events.PlayerEvents;
-	import com.lafabrick.youtube.player.events.PlayerStateEvent;
-	import com.lafabrick.youtube.player.events.SimpleVideoEvent;
-	import com.lafabrick.youtube.player.events.VideoErrorEvent;
+	import com.youtube.chromelessPlayer.constants.PlayerStateCode;
+	import com.youtube.chromelessPlayer.events.PlaybackQualityEvent;
+	import com.youtube.chromelessPlayer.events.PlayerEvents;
+	import com.youtube.chromelessPlayer.events.PlayerStateEvent;
+	import com.youtube.chromelessPlayer.events.SimpleVideoEvent;
+	import com.youtube.chromelessPlayer.events.VideoErrorEvent;
 	
 	import flash.display.Loader;
 	import flash.display.Sprite;
@@ -21,7 +21,7 @@ package com.lafabrick.youtube.player
 	[Event(name="progress", type="flash.events.ProgressEvent")]
 	[Event(name="playHeadUpdate", type="com.youtube.player.events.SimpleVideoEvent")]
 	
-	[Event(name="playerStateChange", type="com.youtube.player.events.PlayerStateEvent")]
+	[Event(name="init", type="flash.events.Event")]
 	[Event(name="videoError", type="com.youtube.player.events.VideoErrorEvent")]
 	[Event(name="playBackQualityChange", type="com.youtube.player.events.PlaybackQualityEvent")]
 	[Event(name="playerStateChange", type="com.youtube.player.events.PlayerStateEvent")]
@@ -78,9 +78,7 @@ package com.lafabrick.youtube.player
 			
 			_initialized = true;
 			
-			var e:PlayerStateEvent = new PlayerStateEvent(PlayerStateEvent.PLAYER_STATE_CHANGE);
-			e.stateCode = PlayerStateCode.READY;
-			dispatchEvent( e );
+			dispatchEvent(  new Event(Event.INIT) );
 		}
 
 		private function _onPlayerError(event:Event):void
@@ -93,7 +91,7 @@ package com.lafabrick.youtube.player
 		private function _onPlayerStateChange(event:Event):void 
 		{
 			switch(Object(event).data)
-			{
+			{ 
 				case PlayerStateCode.BUFFERING:
 					removeEventListener(Event.ENTER_FRAME, onPlayHeadUpdate);
 					addEventListener(Event.ENTER_FRAME, onProgress);
@@ -296,11 +294,13 @@ package com.lafabrick.youtube.player
 			{
 				removeEventListener(Event.ENTER_FRAME,onProgress);
 			}
-			
-	    	var e:ProgressEvent = new ProgressEvent(ProgressEvent.PROGRESS);
-	    	e.bytesLoaded = videoBytesLoaded;
-	    	e.bytesTotal = videoBytesTotal;
-	    	dispatchEvent( e );
+			else
+			{
+		    	var e:ProgressEvent = new ProgressEvent(ProgressEvent.PROGRESS);
+		    	e.bytesLoaded = videoBytesLoaded;
+		    	e.bytesTotal = videoBytesTotal;
+		    	dispatchEvent( e );
+	  		}
 	    }
 	    
 	    

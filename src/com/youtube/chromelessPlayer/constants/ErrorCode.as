@@ -1,4 +1,4 @@
-package com.lafabrick.youtube.player.constants
+package com.youtube.chromelessPlayer.constants
 {
 	public final class ErrorCode
 	{

@@ -1,6 +1,6 @@
-package com.lafabrick.youtube.player.events
+package com.youtube.chromelessPlayer.events
 {
-	import com.lafabrick.youtube.player.constants.ErrorCode;
+	import com.youtube.chromelessPlayer.constants.ErrorCode;
 	
 	import flash.events.Event;
 
