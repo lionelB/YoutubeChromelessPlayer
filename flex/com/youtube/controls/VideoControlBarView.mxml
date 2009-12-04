@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" 
+	verticalAlign="middle" 
+	paddingLeft="5" paddingRight="5"
+	borderSkin="com.youtube.controls.skins.VideoControlBarSkin">
+	
+	<mx:Button id="playButton"
+		skin="com.youtube.controls.skins.VideoButtonSkin"
+		icon="com.youtube.controls.icons.PlayIcon"		
+		toggle="true"
+		width="20" height="20" />
+	
+	<mx:Label id="playHeadTimeLabel" text="xx:xx"  />
+
+	<mx:HSlider id="playHeadSlider" 
+		tickLength="0" tickOffset="0"
+		allowTrackClick="false"
+		width="100%" showTrackHighlight="true" minWidth="50"
+		trackSkin="com.youtube.controls.skins.VideoSliderTrackSkin"
+		trackHighlightSkin="com.youtube.controls.skins.VideoSliderTrackHighlightSkin"
+		thumbSkin="com.youtube.controls.skins.VideoSliderThumbSkin"
+		sliderThumbClass="com.youtube.controls.skins.VideoSliderThumb"
+		/>		
+
+	<mx:Label id="durationLabel" text="xx:xx"/>
+
+	<mx:Button id="soundButton"  
+		width="20" height="20"
+		skin="com.youtube.controls.skins.VideoButtonSkin"
+		icon="com.youtube.controls.icons.SoundIcon"
+		toggle="true" paddingLeft="0" paddingRight="0"
+		selected="true"
+		/>
+</mx:HBox>
